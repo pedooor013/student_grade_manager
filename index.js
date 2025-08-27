@@ -2,13 +2,7 @@ import http from 'http';
 import {v4} from 'uuid';
 //Porta do servidor
 const port = 3000;
-const grades = [
-    {
-        "studentName": "Pedro",
-        "subject": "English",
-        "grade": "8"
-    }
-]
+const grades = [];
 
 //Criação do http
 const server = http.createServer((request, response) =>{
@@ -16,8 +10,8 @@ const server = http.createServer((request, response) =>{
     const {method, url} = request;
 
     let body = '';
-    request.on('data', chunk =>{
-        body += chunck.toString();
+    request.on('data', chuck =>{
+        body += chuck.toString();
     });
 
     request.on('end', () =>{
@@ -27,8 +21,8 @@ const server = http.createServer((request, response) =>{
         response.end(JSON.stringify(grades));
     }else if(url === '/grades' && method === 'POST'){
         const { studentName, subject, grade} = JSON.parse(body);
-        grades.push;
         const newGrade = {id: v4(), studentName, subject, grade};
+        grades.push(newGrade);
         response.writeHead(201, {'Content-Type': 'application/json'});
         response.end(JSON.stringify(newGrade));
     }
