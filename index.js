@@ -60,6 +60,21 @@ const server = http.createServer((request, response) =>{
             response.end(JSON.stringify({message: 'Grade not found'}));
         }
     }
+
+    else if(url.startsWith("/grades/") && method === "DELETE"){
+        const index = grades.findIndex((g) => g.id === id); //diferença de find e findindex: Find retorna o objeto para ser alterado e o find index retorna a posição;
+        
+        if(index !== -1){
+            grades.splice(index, 1);
+            response.writeHead(204);
+            response.end();
+        }else{
+            response.writeHead(404, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify({message: 'Grade not found'}));
+        }
+
+    }
+
     else{
         response.writeHead(404, {'Content-Type': 'application/json'});
         response.end(JSON.stringify({message: 'Route not found'}));
